@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emotional Intelligence Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1, h2, p {
+      text-align: center;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .result {
+      font-weight: bold;
+      text-align: center;
+    }
+    button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      background: #007BFF;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Emotional Intelligence Quiz for Teachers</h1>
+    <form id="quizForm">
+      <!-- Questions -->
+      <div id="questions"></div>
+      <button type="submit">Submit Quiz</button>
+    </form>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    const questions = [
+      "I am aware of my emotions as I experience them.",
+      "I can stay calm under pressure.",
+      "I understand how my emotions affect others.",
+      "I am good at resolving conflicts peacefully.",
+      "I actively listen when others are talking.",
+      "I am comfortable expressing how I feel.",
+      "I recognize emotional patterns in myself.",
+      "I take responsibility for my emotional reactions.",
+      "I can motivate myself to work toward goals despite setbacks.",
+      "I sense how others are feeling even if they don't say it.",
+      "I adjust my communication based on who I'm speaking to.",
+      "I handle criticism without becoming defensive.",
+      "I know how to encourage others and lift their mood.",
+      "I reflect on how I handled situations emotionally."
+    ];
+
+    const answers = [
+      "1 - Never",
+      "2 - Rarely",
+      "3 - Sometimes",
+      "4 - Often",
+      "5 - Always"
+    ];
+
+    const quizContainer = document.getElementById("questions");
+
+    questions.forEach((q, index) => {
+      const div = document.createElement("div");
+      div.classList.add("question");
+      div.innerHTML = `<p><strong>Q${index + 1}:</strong> ${q}</p>
+        <select name="q${index}" required>
+          ${answers.map((a, i) => `<option value="${i + 1}">${a}</option>`).join('')}
+        </select>`;
+      quizContainer.appendChild(div);
+    });
+
+    document.getElementById("quizForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const form = new FormData(e.target);
+      let score = 0;
+      for (let value of form.values()) {
+        score += parseInt(value);
+      }
+
+      let resultText = "";
+      if (score >= 56) {
+        resultText = "You have strong emotional intelligence. Great job!";
+      } else if (score >= 42) {
+        resultText = "You’re on the right track. Here are some tips to grow your emotional intelligence: <br><br>" +
+          "<ul><li>Practice active listening.</li><li>Reflect on emotional reactions.</li><li>Seek feedback from trusted colleagues.</li></ul>";
+      } else {
+        resultText = "It looks like there’s room to grow. Try the following to develop your emotional intelligence: <br><br>" +
+          "<ul><li>Journal your emotions daily.</li><li>Pause before reacting.</li><li>Take time to understand others’ perspectives.</li></ul>";
+      }
+
+      document.getElementById("result").innerHTML = resultText;
+    });
+  </script>
+</body>
+</html>
